@@ -6,11 +6,13 @@
 module.exports = {
   // 전체목록조회
   boardList: {
-    query: `SELECT * FROM t_board_board`,
+    query: `SELECT b.no, b.title, b.writer, b.content, b.created_date, b.updated_date, count(c.no) as count 
+            FROM t_board_board b LEFT JOIN t_comment_board c on b.no = c.bno 
+            GROUP BY  b.no, b.title, b.writer, b.content, b.created_date, b.updated_date`,
   },
 
   // 단건조회
-  boardSelect: { query: `select * from t_board_board where no = ?` },
+  boardDetail: { query: `select * from t_board_board where no = ?` },
 
   // 단건조회(댓글목록)
   commentSelect: { query: `select * from t_comment_board where bno = ?` },
